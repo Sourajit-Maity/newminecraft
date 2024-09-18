@@ -1,0 +1,10 @@
+# created by virtualenv automatically
+.DS_Store
+bin/
+db.sqlite3
+etc/
+lib/
+pyvenv.cfg
+share/
+*.log
+venv/
