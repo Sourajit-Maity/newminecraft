@@ -1,0 +1,317 @@
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #2196F3;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+
+#bulb {
+    /* width: 100%; */
+    /* height: auto; */
+    /* max-width: 400px; */
+    /* max-height: 500px; */
+    /* padding-top: 20px; */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 34%;
+    background-color: #fff;
+}
+
+/* compass css */
+.compass {
+    width: 160px;
+    height: 160px;
+    background-color: #F3F3F3;
+    border-radius: 100%;
+    background-image: -webkit-linear-gradient(top, #F7F7F7, #ECECEC);
+    position: relative;
+    margin: 0 auto;
+}
+
+.compass-inner {
+    width: 130px;
+    height: 130px;
+    background-color: #3D3D3D;
+    border-radius: 100%;
+    position: relative;
+    left: 15.5px;
+    top: 15.5px;
+    border: 3px solid #C5C5C5;
+}
+
+.main-arrow {
+    /* height: 100%; */
+    /* width: 22px; */
+    left: 61px;
+    position: relative;
+    padding-top: 12px;
+    box-sizing: border-box;
+    transform: rotate(20deg);
+    animation: spin 2.0s alternate infinite;
+    -ms-transform: rotate(20deg);
+    -o-transform: rotate(20deg);
+    -o-animation: spin 2.0s alternate infinite;
+    -moz-transform: rotate(20deg);
+    -moz-animation: spin 2.0s alternate infinite;
+    -webkit-transform: rotate(0deg);
+    -webkit-animation: spin 2.0s alternate infinite;
+    /* /* top: 8px; */
+
+}
+
+.arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 55px solid #EF5052;
+    position: relative;
+}
+
+.arrow-down {
+    -webkit-transform: rotate(180deg);
+    width: 0;
+    transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 55px solid #F3F3F3;
+    position: relative;
+}
+
+.north {
+    font-size: 15px;
+    font-family: 'Lobster Two', cursive;
+    color: #FFF;
+    position: absolute;
+    left: 58px;
+    top: 2px;
+}
+
+.east {
+    font-size: 15px;
+    font-family: 'Lobster Two', cursive;
+    color: #FFF;
+    position: absolute;
+    left: 114px;
+    top: 54px;
+}
+
+.west {
+    font-size: 15px;
+    font-family: 'Lobster Two', cursive;
+    color: #FFF;
+    position: absolute;
+    left: 2px;
+    top: 58px
+}
+
+.south {
+    font-size: 15px;
+    font-family: 'Lobster Two', cursive;
+    color: #FFF;
+    position: absolute;
+    left: 59px;
+    top: 105px;
+}
+
+/* @keyframes spin {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+        transform: scale(1) rotate(80deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(-180deg);
+    }
+}
+
+@-o-keyframes spin {
+    0% {
+        -webkit-transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+        -webkit-transform: scale(1) rotate(80deg);
+    }
+
+    100% {
+        -webkit-transform: scale(1) rotate(-180deg);
+    }
+}
+
+@-moz-keyframes spin {
+    0% {
+        -webkit-transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+        -webkit-transform: scale(1) rotate(80deg);
+    }
+
+    100% {
+        -webkit-transform: scale(1) rotate(-180deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+        -webkit-transform: scale(1) rotate(80deg);
+    }
+
+    100% {
+        -webkit-transform: scale(1) rotate(-180deg);
+    }
+} */
+
+@media (max-width: 600px) {
+    .compass {
+        width: 200px;
+        height: 200px;
+        text-align: center;
+    }
+
+    .compass-inner {
+        width: 170px;
+        height: 170px;
+        left: 13px;
+        top: 13px;
+    }
+
+    .main-arrow {
+        width: 30px;
+        left: 78px;
+        width: 15px;
+        padding-top: 3px;
+    }
+
+    .arrow-up {
+        border-bottom: 82.5px solid #EF5052;
+        border-left: 7.5px solid transparent;
+        border-right: 7.5px solid transparent;
+    }
+
+    .arrow-down {
+        border-bottom: 82.5px solid #F3F3F3;
+        border-left: 7.5px solid transparent;
+        border-right: 7.5px solid transparent;
+    }
+
+    .north {
+        left: 78px;
+        top: 10px;
+        font-size: 16px;
+    }
+
+    .south {
+        font-size: 16px;
+        left: 78px;
+        top: 140px;
+    }
+
+    .east {
+        font-size: 16px;
+        top: 72.5px;
+        left: 145px;
+    }
+
+    .west {
+        font-size: 16px;
+        left: 10px;
+        top: 72.5px;
+    }
+}
+
+.vertical {
+    transform: rotate(-90deg) !important;
+}
+
+.progress-bar-vertical {
+    width: 25px;
+    min-height: 200px;
+    margin-right: 20px;
+    background: #d0cece;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-end;
+    -webkit-align-items: flex-end;
+}
+
+.progress-bar-vertical .progress-bar {
+    width: 100%;
+    height: 0;
+    -webkit-transition: height 0.6s ease;
+    -o-transition: height 0.6s ease;
+    transition: height 0.6s ease;
+}
+marquee{
+    color: red;
+}

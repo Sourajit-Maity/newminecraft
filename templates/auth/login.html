@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="{% static '' %}">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IFB-Agro | BEVCO Data Extractor</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <!-- /.login-logo -->
+  <div class="card card-outline card-primary">
+    <div class="card-header text-center">
+      <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a>
+      <!-- <img src="dist/img/logo.png" style="width:100px;"> -->
+    </div>
+    <div class="card-body">
+      <p class="login-box-msg">Sign in to ParkOurMap</p>
+
+      <form id="login-form">
+        <div class="input-group mb-3">
+          <input type="email" class="form-control" placeholder="Email" name="email" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="Password" name="password" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="social-auth-links text-center mt-2 mb-3">
+        <button type="submit" form="login-form" class="btn btn-primary btn-block">Sign In</button>
+      </div>
+
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="plugins/sweetalert2/sweetalert2_11.js"></script>
+
+<script>
+  $(document).ready(function(){
+    $("#login-form").submit(function (e) {
+      e.preventDefault();
+
+      var email = $("input[name=email]").val();
+			var password = $("input[name=password]").val();
+
+      var obj = {
+        "email": email,
+        "password": password
+      }
+
+			data = JSON.stringify(obj);
+
+      var url = "{% url 'login' %}";
+      $.ajax({
+        url: url,
+        data: data,
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        cache: false,
+        crossDomain: true,
+        success: function (data) {
+          if (data.status == true) {
+            console.log(data);
+            localStorage.setItem("AuthToken", data.token);
+            localStorage.setItem("email", data.email);
+            localStorage.setItem("username", data.username);
+
+            location.replace("{% url 'dashboard' %}");
+          } else {
+            Swal.fire({
+              title: "Error occured!",
+              text: data.msg,
+              icon: "error"
+            });
+            
+          }
+        },
+        error: function () {
+          swal.fire({
+            title: "Server Not Responding !!",
+            text: "Please Try Again",
+            icon: "warning"
+          }).then(function () {
+            location.reload();
+          });
+        }
+
+      });
+
+
+    });
+  });
+</script>
+</body>
+</html>

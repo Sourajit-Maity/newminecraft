@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!--begin::Head-->
+	{% include "../layouts/head.html" %}
+  {% block header %}{% endblock %}
+	<!--end::Head-->
+
+<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
+<div class="wrapper overlay-wrapper">
+  <div class="overlay dark" style="display: none;">
+    <i class="fas fa-5x fa-sync-alt fa-spin"></i>
+    <!-- <div class="text-bold pt-2">Loading...</div> -->
+  </div>
+
+  <!-- Preloader -->
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTE" width="120">
+  </div>
+
+  <!--begin::Aside-->
+  {% block navbar %}{% endblock %}
+  <!--end::Aside-->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header pb-0">
+      <div class="container-fluid">
+        {% block toolbar %}{% endblock %}
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        {% block content %}{% endblock %}
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!--begin::Footer-->
+  {% include "../layouts/footer.html" %}
+  <!--end::Footer-->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!--begin::Javascript-->
+{% include "../layouts/js-import.html" %}
+{% block js %}{% endblock %}
+<!--end::Javascript-->
+</body>
+</html>
