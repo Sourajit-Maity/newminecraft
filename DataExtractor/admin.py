@@ -10,4 +10,6 @@ class NoDeleteAdminMixin:
 
 class Feedback(NoDeleteAdminMixin, admin.ModelAdmin):
     list_display = ('id', 'user', 'time', 'x', 'y', 'z')
+    list_filter = ('user', 'time', 'x', 'y', 'z')
+    search_fields = ('user', 'time', 'x', 'y', 'z')
 admin.site.register(feedback,Feedback)

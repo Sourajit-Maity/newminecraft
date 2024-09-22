@@ -25,7 +25,7 @@
 
 {% block content %}
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-3">
     <div class="card card-primary">
       <div class="card-header">
         <h3 class="card-title">Upload Master File</h3>
@@ -48,12 +48,55 @@
       </div>
     </div>
   </div>
+  <div class="col-md-9">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Comparison Chart X</h3>
+          </div>
+          <div class="card-body">
+            <div id='MultiLinechart_x'></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Comparison Chart Y</h3>
+          </div>
+          <div class="card-body">
+            <div id='MultiLinechart_y'></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Comparison Chart Z</h3>
+          </div>
+          <div class="card-body">
+            <div id='MultiLinechart_z'></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
 </div>
 
 {% endblock %}
 
 {% block js %}
 <script>
+  var dataX = [];
+  var dataY = [];
+  var dataZ = [];
+  var temp_obj = {};
+
+
   const swal_btn = Swal.mixin({
     customClass: {
       confirmButton: 'btn btn-primary',
@@ -64,6 +107,110 @@
 
   $(document).ready(function (){
     bsCustomFileInput.init();
+
+    var layout = {
+      title:'Comparison Chart',
+      dragmode: 'pan', // enables panning
+      xaxis: {
+          title: 'Time',
+          //range: [0, 3], // sets "zoom" factor
+          // rangeslider: {}
+      },
+      yaxis: {
+          title: 'Value',
+          // fixedrange: true, // prevents vertical panning
+      },
+      paper_bgcolor: "#FFF",
+      plot_bgcolor: "#e9ecef"
+    };
+
+    
+
+    var url = "{% url 'get_feedback_data' %}";
+    $.ajax({
+      url: url,
+      //data: data,
+      type: "GET",
+      dataType : 'json',
+      //processData: false,
+      //contentType: false,
+      cache: false,
+      headers: {
+        "Authorization": "Token " + localStorage.getItem("AuthToken")
+      },
+      success: function (data) {
+        console.log(data);
+        if (data.status === true) {
+          var obj = data.data;
+
+          for(row of obj){
+            if(temp_obj[row['user']] == undefined){
+              temp_obj[row['user']] = {
+                'time': [],
+                'x': [],
+                'y': [],
+                'z': []
+              };
+            }
+
+            temp_obj[row['user']]['time'].push(parseInt(row['time']));
+            temp_obj[row['user']]['x'].push(parseInt(row['x']));
+            temp_obj[row['user']]['y'].push(parseInt(row['y']));
+            temp_obj[row['user']]['z'].push(parseInt(row['z']));
+          
+          }
+
+          $.each(temp_obj, function (key, val) {
+            dataX.push({
+              x: val['time'],
+              y: val['x'],
+              type: 'scatter',
+              name: 'user ' + key
+            });
+
+            dataY.push({
+              x: val['time'],
+              y: val['y'],
+              type: 'scatter',
+              name: 'user ' + key
+            });
+
+            dataZ.push({
+              x: val['time'],
+              y: val['z'],
+              type: 'scatter',
+              name: 'user ' + key
+            });
+          });
+
+          Plotly.newPlot('MultiLinechart_x', dataX, layout, {displayModeBar: true, displaylogo: false, scrollZoom: true, responsive: true});
+          Plotly.newPlot('MultiLinechart_y', dataY, layout, {displayModeBar: true, displaylogo: false, scrollZoom: true, responsive: true});
+          Plotly.newPlot('MultiLinechart_z', dataZ, layout, {displayModeBar: true, displaylogo: false, scrollZoom: true, responsive: true});
+
+        } else {
+          Swal.fire({
+            html: data.msg,
+            icon: 'error'
+          }).then(() => {
+            location.reload();
+          });
+        }
+      },
+      error: function (error) {
+        console.log(error);
+        Swal.fire({
+          text: "Error in getting feedback data!!!",
+          icon: 'error'
+        }).then(() => {
+          location.reload();
+        });
+      }
+    });
+    
+
+
+
+
 
     // function upload_data
     $("#upload-master-product-form").submit(function (e) {
@@ -115,7 +262,11 @@
           });
         }
       });
+    
     });
+  
+  
+    
   
   });
 

@@ -19,7 +19,7 @@ LOG_LEVEL = "DEBUG"
 
 # Set the logger settings
 logging.basicConfig(format='%(asctime)s-%(levelname)-6s[(%(threadName)-10s)]:%(message)s', datefmt='%d-%b-%y %H:%M:%S', level=LOG_LEVEL, 
-                    handlers=[logging.FileHandler('BEVCO_data_extractor.log'), logging.StreamHandler()])
+                    handlers=[logging.FileHandler('NewMineCraft.log'), logging.StreamHandler()])
 
 
 LENGTH_SMALL = 25

@@ -55,7 +55,7 @@ def home_view(request):
 def upload_master_file(request):
     try:
         entered_info = defaults.get_entered_info(request)
-        defaults.logger("Convert_BEVCO_PDF_to_XLSX: Entered", entered_info, level="info")
+        defaults.logger("upload_master_file: Entered", entered_info, level="info")
 
         upload_file = entered_info.get('ProductFile')
         content = upload_file.read()
@@ -63,11 +63,9 @@ def upload_master_file(request):
         
         if content is not None:
             feedback_df =  pd.io.excel.read_excel(io.BytesIO(content))
-            print(feedback_df)
+            # print(feedback_df)
 
             feedback_df = feedback_df[['user', 'time', 'x', 'y', 'z']]
-
-
 
             model_instance = [feedback(**data) for index, data in feedback_df.iterrows()]
             feedback.objects.bulk_create(model_instance)
@@ -75,7 +73,7 @@ def upload_master_file(request):
             return Response({
                 RET_STATUS: True,
                 RET_DATA: upload_file_name,
-                RET_MSG: "Master Product file uploaded successfully !!!",
+                RET_MSG: "Master file uploaded successfully !!!",
             }, status=HTTP_200_OK)
         
         else:
@@ -88,6 +86,27 @@ def upload_master_file(request):
         defaults.logger("upload_master_product_file Exception: ", e, level="error")
         return Response({RET_STATUS: False, RET_MSG: str(e)}, status=HTTP_400_BAD_REQUEST)
     
+# ======================================================================
+@api_view(["GET"])
+def get_feedback_data(request):
+    try:
+        entered_info = defaults.get_entered_info(request)
+        defaults.logger("get_feedback_data: Entered", entered_info, level="info")
+
+        # upload_file = entered_info.get('ProductFile')
+
+        data = feedback.objects.all().values()
+
+        return Response({
+            RET_STATUS: True,
+            RET_DATA: data,
+        }, status=HTTP_200_OK)
+
+        
+    except Exception as e:
+        defaults.logger("get_feedback_data Exception: ", e, level="error")
+        return Response({RET_STATUS: False, RET_MSG: str(e)}, status=HTTP_400_BAD_REQUEST)
+     
 # ======================================================================
 # Data Converter - END
 # ======================================================================
