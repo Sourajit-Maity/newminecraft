@@ -53,6 +53,39 @@
       <div class="col-md-6">
         <div class="card card-primary">
           <div class="card-header">
+            <h3 class="card-title">Comparison Chart X vs Y vs Z</h3>
+          </div>
+          <div class="card-body">
+            <div id='MultiLinechart_xyz'></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Comparison Chart X vs Y</h3>
+          </div>
+          <div class="card-body">
+            <div id='MultiLinechart_xy'></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Comparison Chart X vs Z</h3>
+          </div>
+          <div class="card-body">
+            <div id='MultiLinechart_xz'></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card card-primary">
+          <div class="card-header">
             <h3 class="card-title">Comparison Chart X</h3>
           </div>
           <div class="card-body">
@@ -91,6 +124,9 @@
 
 {% block js %}
 <script>
+  var dataXYZ = [];
+  var dataXY = [];
+  var dataXZ = [];
   var dataX = [];
   var dataY = [];
   var dataZ = [];
@@ -161,6 +197,29 @@
           }
 
           $.each(temp_obj, function (key, val) {
+            dataXYZ.push({
+              type: 'scatter3d',
+              mode: 'lines',
+              x: val['x'],
+              y: val['y'],
+              z: val['z'],
+              name: 'user ' + key
+            });
+
+            dataXY.push({
+              x: val['x'],
+              y: val['y'],
+              type: 'scatter',
+              name: 'user ' + key
+            });
+
+            dataXZ.push({
+              x: val['x'],
+              y: val['z'],
+              type: 'scatter',
+              name: 'user ' + key
+            });
+
             dataX.push({
               x: val['time'],
               y: val['x'],
@@ -182,7 +241,10 @@
               name: 'user ' + key
             });
           });
-
+          
+          Plotly.newPlot('MultiLinechart_xyz', dataXYZ, layout, {displayModeBar: true, displaylogo: false, scrollZoom: true, responsive: true});
+          Plotly.newPlot('MultiLinechart_xy', dataXY, layout, {displayModeBar: true, displaylogo: false, scrollZoom: true, responsive: true});
+          Plotly.newPlot('MultiLinechart_xz', dataXZ, layout, {displayModeBar: true, displaylogo: false, scrollZoom: true, responsive: true});
           Plotly.newPlot('MultiLinechart_x', dataX, layout, {displayModeBar: true, displaylogo: false, scrollZoom: true, responsive: true});
           Plotly.newPlot('MultiLinechart_y', dataY, layout, {displayModeBar: true, displaylogo: false, scrollZoom: true, responsive: true});
           Plotly.newPlot('MultiLinechart_z', dataZ, layout, {displayModeBar: true, displaylogo: false, scrollZoom: true, responsive: true});
